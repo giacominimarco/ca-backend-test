@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public Product Get(int id)
+        public Task<Product> Get(int id)
         {
             return _productService.Get(id);
         }
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<Product> GetProducts()
+        public Task<List<Product>> GetProducts()
         {
             return _productService.GetProducts();
         }

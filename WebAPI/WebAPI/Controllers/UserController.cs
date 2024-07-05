@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public User Get(int id)
+        public Task<User> Get(int id)
         {
             return _userService.Get(id);
         }
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<User> GetUsers()
+        public Task<List<User>> GetUsers()
         {
             return _userService.GetUsers();
         }

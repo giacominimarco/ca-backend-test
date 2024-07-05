@@ -16,12 +16,12 @@ namespace WebAPI.Infrastructure.Service
             return _productRepository.Delete(id);
         }
 
-        public Product Get(int id)
+        public Task<Product> Get(int id)
         {
             return _productRepository.Get(id);
         }
 
-        public List<Product> GetProducts()
+        public Task<List<Product>> GetProducts()
         {
             return _productRepository.GetProducts();
         }
