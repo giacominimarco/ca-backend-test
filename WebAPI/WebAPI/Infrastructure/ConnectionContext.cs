@@ -9,7 +9,9 @@ namespace WebAPI.Infrastructure
         {
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Billing> Billings { get; set; }
+        public DbSet<BillingLine> BillingLines { get; set; }
     }
 }

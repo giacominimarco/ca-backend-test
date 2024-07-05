@@ -26,9 +26,9 @@ namespace WebAPI.Infrastructure.Service
             return _productRepository.GetProducts();
         }
 
-        public bool Save(Product product)
+        public bool Insert(Product product)
         {
-            return _productRepository.Save(product);
+            return _productRepository.Insert(product);
         }
 
         public bool Update(Product product)
