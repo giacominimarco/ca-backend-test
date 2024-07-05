@@ -34,13 +34,13 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Insert")]
-        public bool Insert(Customer customer)
+        public bool Insert([FromBody] Customer customer)
         {
             return _customerService.Insert(customer);
         }
 
         [HttpPut("Update")]
-        public bool Update(Customer customer)
+        public bool Update([FromBody] Customer customer)
         {
             return _customerService.Update(customer);
         }

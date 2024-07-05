@@ -34,13 +34,13 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Insert")]
-        public bool Insert(Product product)
+        public bool Insert([FromBody] Product product)
         {
             return _productService.Insert(product);
         }
 
         [HttpPut("Update")]
-        public bool Update(Product product)
+        public bool Update([FromBody] Product product)
         {
             return _productService.Update(product);
         }
