@@ -5,7 +5,7 @@ using WebAPI.Infrastructure.Service;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -16,13 +16,13 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("Get")]
-        public Task<Product> Get([FromQuery] int id)
+        public Task<Product> Get([FromQuery] Guid id)
         {
             return _productService.Get(id);
         }
 
         [HttpDelete("Delete")]
-        public bool Delete([FromQuery] int id)
+        public bool Delete([FromQuery] Guid id)
         {
             return _productService.Delete(id);
         }

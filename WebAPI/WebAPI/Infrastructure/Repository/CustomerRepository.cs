@@ -11,17 +11,16 @@ namespace WebAPI.Infrastructure.Repository
             _connectionContext = connectionContext;
         }
 
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
-            _connectionContext.Customers.RemoveRange(new Customer[id]);
+            _connectionContext.Customers.RemoveRange(new Customer { Id = id });
             _connectionContext.SaveChanges();
             return true;
         }
 
-        public Task<Customer> Get(int id)
+        public Task<Customer> Get(Guid id)
         {
-            //return _connectionContext.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-            throw new NotImplementedException();
+            return _connectionContext.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<List<Customer>> Customers()

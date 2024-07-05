@@ -11,12 +11,12 @@ namespace WebAPI.Infrastructure.Service
             _customerRepository = customerRepository;
         }
 
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             return _customerRepository.Delete(id);
         }
 
-        public Task<Customer> Get(int id)
+        public Task<Customer> Get(Guid id)
         {
             return _customerRepository.Get(id);
         }
