@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Domain\DTOs\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

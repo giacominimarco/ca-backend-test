@@ -3,42 +3,42 @@ using WebAPI.Domain.Model;
 
 namespace WebAPI.Infrastructure.Repository
 {
-    public class ProductRepository : IProductRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly ConnectionContext _connectionContext;
-        public ProductRepository(ConnectionContext connectionContext)
+        public CustomerRepository(ConnectionContext connectionContext)
         {
             _connectionContext = connectionContext;
         }
 
         public bool Delete(int id)
         {
-            _connectionContext.Products.RemoveRange(new Product[id]);
+            _connectionContext.Customers.RemoveRange(new Customer[id]);
             _connectionContext.SaveChanges();
             return true;
         }
 
-        public Task<Product> Get(int id)
+        public Task<Customer> Get(int id)
         {
-            //return _connectionContext.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            //return _connectionContext.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             throw new NotImplementedException();
         }
 
-        public Task<List<Product>> GetProducts()
+        public Task<List<Customer>> Customers()
         {
-            return _connectionContext.Products.ToListAsync();
+            return _connectionContext.Customers.ToListAsync();
         }
 
-        public bool Insert(Product product)
+        public bool Insert(Customer customer)
         {
-            _connectionContext.Products.Add(product);
+            _connectionContext.Customers.Add(customer);
             _connectionContext.SaveChanges();
             return true;
         }
 
-        public bool Update(Product product)
+        public bool Update(Customer customer)
         {
-            _connectionContext.Products.Update(product);
+            _connectionContext.Customers.Update(customer);
             _connectionContext.SaveChanges();
             return true;
         }

@@ -15,31 +15,31 @@ namespace WebAPI.Controllers
             _productService = productService;
         }
 
-        [HttpGet("{id}")]
-        public Task<Product> Get(int id)
+        [HttpGet("Get")]
+        public Task<Product> Get([FromQuery] int id)
         {
             return _productService.Get(id);
         }
 
-        [HttpDelete("{id}")]
-        public bool Delete(int id)
+        [HttpDelete("Delete")]
+        public bool Delete([FromQuery] int id)
         {
             return _productService.Delete(id);
         }
 
-        [HttpGet]
+        [HttpGet("GetProducts")]
         public Task<List<Product>> GetProducts()
         {
             return _productService.GetProducts();
         }
 
-        [HttpPost]
-        public bool Save(Product product)
+        [HttpPost("Insert")]
+        public bool Insert(Product product)
         {
-            return _productService.Save(product);
+            return _productService.Insert(product);
         }
 
-        [HttpPut]
+        [HttpPut("Update")]
         public bool Update(Product product)
         {
             return _productService.Update(product);
