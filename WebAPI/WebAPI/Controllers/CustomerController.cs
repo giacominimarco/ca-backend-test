@@ -16,13 +16,13 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("Get")]
-        public Task<Customer> Get([FromQuery] int id)
+        public Task<Customer> Get([FromQuery] Guid id)
         {
             return _customerService.Get(id);
         }
 
         [HttpDelete("Delete")]
-        public bool Delete([FromQuery] int id)
+        public bool Delete([FromQuery] Guid id)
         {
             return _customerService.Delete(id);
         }

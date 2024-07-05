@@ -4,9 +4,9 @@ namespace WebAPI.Infrastructure.Service
 {
     public interface ICustomerService
     {
-        public Task<Customer> Get(int id);
+        public Task<Customer> Get(Guid id);
         public Task<List<Customer>> Customers();
-        public bool Delete(int id);
+        public bool Delete(Guid id);
         public bool Insert(Customer customer);
         public bool Update(Customer customer);
     }
