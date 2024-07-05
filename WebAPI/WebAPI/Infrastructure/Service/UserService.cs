@@ -16,12 +16,12 @@ namespace WebAPI.Infrastructure.Service
             return _userRepository.Delete(id);
         }
 
-        public User Get(int id)
+        public Task<User> Get(int id)
         {
             return _userRepository.Get(id);
         }
 
-        public List<User> GetUsers()
+        public Task<List<User>> GetUsers()
         {
             return _userRepository.GetUsers();
         }

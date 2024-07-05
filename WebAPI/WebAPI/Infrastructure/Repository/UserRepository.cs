@@ -1,4 +1,5 @@
-﻿using WebAPI.Domain.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using WebAPI.Domain.Model;
 
 namespace WebAPI.Infrastructure.Repository
 {
@@ -17,14 +18,14 @@ namespace WebAPI.Infrastructure.Repository
             return true;
         }
 
-        public User Get(int id)
+        public Task<User> Get(int id)
         {
-            throw new NotImplementedException();
+            return _connectionContext.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<User> GetUsers()
+        public Task<List<User>> GetUsers()
         {
-            throw new NotImplementedException();
+            return _connectionContext.Users.ToListAsync();
         }
 
         public bool Save(User user)
