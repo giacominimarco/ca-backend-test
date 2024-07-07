@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Insert")]
-        public bool Insert([FromBody] Billing billing)
+        public Task<bool> Insert([FromBody] Billing billing)
         {
             return _billingService.Insert(billing);
         }

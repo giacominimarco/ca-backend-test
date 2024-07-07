@@ -1,17 +1,16 @@
 ﻿using Newtonsoft.Json;
 using WebAPI.Domain.Model;
-using WebAPI.Infrastructure.Repository;
 
 namespace WebAPI.Infrastructure.Service
 {
     public class ImportDataService : IImportDataService
     {
-        private readonly IProductRepository _productRepository;
-        private readonly ICustomerRepository _customerRepository;
-        public ImportDataService(IProductRepository productRepository, ICustomerRepository customerRepository)
+        private readonly IProductService _productService;
+        private readonly ICustomerService _customerService;
+        public ImportDataService(IProductService productService, ICustomerService customerService)
         {
-            _productRepository = productRepository;
-            _customerRepository = customerRepository;
+            _productService = productService;
+            _customerService = customerService;
         }
 
         public async Task<BillingDTO> ImportFirstData()
@@ -23,7 +22,7 @@ namespace WebAPI.Infrastructure.Service
                 if (objBilling is null)
                     throw new Exception("Billing not found");
 
-                BillingDTO billing = JsonConvert.DeserializeObject<BillingDTO>(objBilling.ToString()); ;
+                BillingDTO billing = JsonConvert.DeserializeObject<BillingDTO>(objBilling.ToString());
 
                 if (billing is null)
                     throw new Exception("Billing not found");
@@ -32,11 +31,8 @@ namespace WebAPI.Infrastructure.Service
                 if (billing.Lines is null)
                     throw new Exception("Linnes not found");
 
-                await HasCustomer(billing.Customer);
-                await HasLinnes(billing.Lines);
-                
-                await AddCustomer(billing.Customer);
-                await AddLinnes(billing.Lines);
+                AddCustomer(billing.Customer);
+                AddLinnes(billing.Lines);
 
                 return billing;
             }
@@ -46,24 +42,22 @@ namespace WebAPI.Infrastructure.Service
             }
         }
 
-        private Task AddLinnes(List<BillingLineDTO> lines)
+        private bool AddLinnes(List<BillingLineDTO> lines)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < lines.Count; i++)
+            {
+                BillingLineDTO billingLine = lines[i];
+                Product product = new Product();
+                product.Id = Guid.Parse(billingLine.ProductId);
+                product.Name = billingLine.Description;
+                _productService.Insert(product);
+            }
+            return true;
         }
 
-        private Task AddCustomer(Customer customer)
+        private bool AddCustomer(Customer customer)
         {
-            throw new NotImplementedException();
-        }
-
-        private Task HasLinnes(List<BillingLineDTO> lines)
-        {
-            throw new Exception("Linnes not found");
-        }
-
-        private Task HasCustomer(Customer customer)
-        {
-            throw new Exception("Customer not found");
+            return _customerService.Insert(customer);
         }
 
         private static async Task<List<object>> GetBillings()
@@ -79,7 +73,7 @@ namespace WebAPI.Infrastructure.Service
                     throw new HttpRequestException(response.ToString());
                 return await response.Content.ReadFromJsonAsync<List<object>>();
             }
-            catch(HttpRequestException e)
+            catch (HttpRequestException e)
             {
                 throw e;
             }
