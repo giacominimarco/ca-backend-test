@@ -21,6 +21,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IBillingRepository, BillingRepository>();
 builder.Services.AddScoped<IBillingService, BillingService>();
+builder.Services.AddScoped<IImportDataService, ImportDataService>();
 
 var app = builder.Build();
 

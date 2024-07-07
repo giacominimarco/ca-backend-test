@@ -1,5 +1,11 @@
-﻿using WebAPI.Domain.Model;
+﻿using Azure;
+using Azure.Core;
+using Azure.Messaging;
+using Microsoft.Win32;
+using System;
+using WebAPI.Domain.Model;
 using WebAPI.Infrastructure.Repository;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebAPI.Infrastructure.Service
 {
@@ -29,7 +35,23 @@ namespace WebAPI.Infrastructure.Service
         public bool Insert(Billing billing)
         {
             return _billingRepository.Insert(billing);
+            //try
+            //{
+            //    if (!HasCustomer(billing.Customer))
+            //        return ;// (false, "esta faltando o registro do customer");
+            //    //Se o cliente e o produto existirem, inserir o registro do billing e billingLines no DB local.
+            //    //Caso se o cliente existir ou só o produto existir, deve retornar um erro na aplicação informando sobre a criação do registro faltante.
+            //    //Criar exceptions tratando mal funcionamento ou interrupção de serviço quando API estiver fora.
+            //    return _billingRepository.Insert(billing);
+            //}
+            //catch(Exception ex) { 
+            //}
         }
+
+        //private bool HasCustomer(Customer customer)
+        //{
+
+        //}
 
         public bool Update(Billing billing)
         {
