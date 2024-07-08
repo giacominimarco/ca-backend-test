@@ -36,7 +36,6 @@ namespace WebAPI.Infrastructure.Service
 
             try
             {
-                //Caso se o cliente existir ou só o produto existir, deve retornar um erro na aplicação informando sobre a criação do registro faltante.
                 await HasCustomer(billing.Customer);
                 await HasLinnes(billing.Lines);
                 //Se o cliente e o produto existirem, inserir o registro do billing e billingLines no DB local.
@@ -61,14 +60,14 @@ namespace WebAPI.Infrastructure.Service
                     linesNotFound.Add(billingLine.Description);
             }
             if (linesNotFound.Count > 0)
-                throw new Exception($"Linnes not found: {string.Join(", ", linesNotFound)}");
+                throw new DataException($"Linnes not found: {string.Join(", ", linesNotFound)}");
         }
 
         private async Task HasCustomer(Customer customer)
         {
             Customer answerCustomer = await _customerService.Get(customer.Id);
             if (answerCustomer is null)
-                throw new Exception($"Customer '{customer.Name}' not found");
+                throw new DataException($"Customer '{customer.Name}' not found");
         }
 
         public bool Update(Billing billing)

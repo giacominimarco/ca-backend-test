@@ -20,16 +20,16 @@ namespace WebAPI.Infrastructure.Service
                 List<object> billings = await GetBillings();
                 object? objBilling = billings.FirstOrDefault();
                 if (objBilling is null)
-                    throw new Exception("Billing not found");
+                    throw new DataException("Billing not found");
 
                 BillingDTO billing = JsonConvert.DeserializeObject<BillingDTO>(objBilling.ToString());
 
                 if (billing is null)
-                    throw new Exception("Billing not found");
+                    throw new DataException("Billing not found");
                 if (billing.Customer is null)
-                    throw new Exception("Customer not found");
+                    throw new DataException("Customer not found");
                 if (billing.Lines is null)
-                    throw new Exception("Linnes not found");
+                    throw new DataException("Linnes not found");
 
                 AddCustomer(billing.Customer);
                 AddLinnes(billing.Lines);
