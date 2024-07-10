@@ -28,11 +28,11 @@ update-database;
 8. Chamar a API ImportData para inserir o registro do billing e billingLines de acordo com as informações disponivais na primeira API externa;
 ---------------------
 **Lista de API’s :**
-	* Get https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing
-	* Get https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
-	* Post https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing
-	* Delete https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
-	* PUT https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
+* Get https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing
+* Get https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
+* Post https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing
+* Delete https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
+* PUT https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
 ---------------------
 **Funcionalidades : 🛠️**
 
