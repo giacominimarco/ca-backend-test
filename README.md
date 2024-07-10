@@ -18,7 +18,7 @@ Criação de uma API REST para gerenciar faturamento de clientes.
 **Configurações necessário para executar a aplicação :**
 1. Ter o banco de dados SQL Server instalado na maquina;
 2. Baixar o repositório do github;
-3. Atualizar as strings de conexção com seu BD em appsettings.json;
+3. Atualizar a string de conexção com seu BD em appsettings.json;
 4. Rodar as migrations;
 ```
 add-migration CreateDB -context ConnectionContext;
