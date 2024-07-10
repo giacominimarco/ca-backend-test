@@ -1,8 +1,6 @@
-**Teste para vaga de Desenvolvimento Back-end .NET**
----------------------
 Criação de uma API REST para gerenciar faturamento de clientes.
 ---------------------
-**Tecnologias utilizadas:**
+**Tecnologias utilizadas :**
 * .NET 7;
 * C#;
 * Entity Framework Core com banco relacional SQL Server;
@@ -11,12 +9,12 @@ Criação de uma API REST para gerenciar faturamento de clientes.
 * API REST / CRUD;
 * Manipulação de Erros / Exceptions;
 ----------------------
-**Serviços:**
+**Serviços :**
 * CRUD de Produtos;
 * CRUD de Customers;
 * Importação de dados a partir de APIs externas;
 ----------------------
-**Configurações necessário para executar a aplicação**
+**Configurações necessário para executar a aplicação :**
 1. Ter o banco de dados SQL Server instalado na maquina;
 2. Baixar o repositório do github;
 3. Com a solução do projeto aberto em um compilador, atualizar as strings de conexção com seu BD em appsettings.json;
@@ -29,14 +27,14 @@ update-database;
 7. Chamar a API ImportFirstData para popular os Customers e Products de acordo com o primeiro registro da API esterna;
 8. Chamar a API ImportData para inserir o registro do billing e billingLines de acordo com as informações disponivais na primeira API externa;
 ---------------------
-* Lista de API’s :
+**Lista de API’s :**
 	* Get https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing
 	* Get https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
 	* Post https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing
 	* Delete https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
 	* PUT https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing/:id
 ---------------------
-**Funcionalidades 🛠️**
+**Funcionalidades : 🛠️**
 
 * Controle de conferência e importação de billing.
     * Utilizar postman para consulta dos dados da API’s para criação das tabelas de billing e billingLines.
