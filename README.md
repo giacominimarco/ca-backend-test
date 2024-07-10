@@ -12,7 +12,8 @@ Criação de uma API REST para gerenciar faturamento de clientes.
 **Serviços :**
 * CRUD de Produtos;
 * CRUD de Customers;
-* Importação de dados a partir de APIs externas;
+* CRUD de Billings;
+* Importação de dados a partir de APIs externas para populas as tabelas Billings e BillingLines no DB;
 ----------------------
 **Configurações necessário para executar a aplicação :**
 1. Ter o banco de dados SQL Server instalado na maquina;
