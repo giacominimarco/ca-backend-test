@@ -20,5 +20,11 @@ namespace WebAPI.Controllers
         {
             return _apiService.ImportFirstData();
         }
+
+        [HttpPost("ImportData")]
+        public Task<bool> ImportData()
+        {
+            return _apiService.ImportData();
+        }
     }
 }

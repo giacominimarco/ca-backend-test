@@ -7,7 +7,7 @@ namespace WebAPI.Infrastructure.Repository
         public Task<Customer> Get(Guid id);
         public Task<List<Customer>> Customers();
         public bool Delete(Guid id);
-        public bool Insert(Customer customer);
+        public Task<bool> Insert(Customer customer);
         public bool Update(Customer customer);
     }
 }

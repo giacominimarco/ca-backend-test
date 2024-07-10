@@ -38,9 +38,6 @@ namespace WebAPI.Infrastructure.Service
             {
                 await HasCustomer(billing.Customer);
                 await HasLinnes(billing.Lines);
-                //Se o cliente e o produto existirem, inserir o registro do billing e billingLines no DB local.
-                
-                //Criar exceptions tratando mal funcionamento ou interrupção de serviço quando API estiver fora.
                 return _billingRepository.Insert(billing);
             }
             catch (HttpRequestException e)
@@ -55,7 +52,7 @@ namespace WebAPI.Infrastructure.Service
             for (int i = 0; i < lines.Count; i++)
             {
                 BillingLine billingLine = lines[i];
-                Product answerProduct = await _productService.Get(billingLine.Id);
+                Product answerProduct = await _productService.Get(billingLine.Product.Id);
                 if (answerProduct is null)
                     linesNotFound.Add(billingLine.Description);
             }

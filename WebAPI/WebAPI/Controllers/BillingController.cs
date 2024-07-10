@@ -36,6 +36,14 @@ namespace WebAPI.Controllers
         [HttpPost("Insert")]
         public Task<bool> Insert([FromBody] Billing billing)
         {
+            //BillingDTQ billingQuery = new BillingDTQ();
+            //billingQuery.InvoiceNumber = billing.InvoiceNumber;
+            //billingQuery.Customer = billing.Customer;
+            //billingQuery.Date = billing.Date;
+            //billingQuery.DueDate = billing.DueDate;
+            //billingQuery.TotalAmount = billing.TotalAmount;
+            //billingQuery.Currency = billing.Currency;
+            //billingQuery.Lines = billing.Lines;
             return _billingService.Insert(billing);
         }
 

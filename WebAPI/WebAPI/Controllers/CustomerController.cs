@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Insert")]
-        public bool Insert([FromBody] Customer customer)
+        public Task<bool> Insert([FromBody] Customer customer)
         {
             return _customerService.Insert(customer);
         }

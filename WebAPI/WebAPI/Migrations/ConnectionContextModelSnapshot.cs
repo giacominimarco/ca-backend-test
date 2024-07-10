@@ -26,6 +26,7 @@ namespace WebAPI.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .IsUnicode(true)
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Currency")
@@ -39,14 +40,17 @@ namespace WebAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasAnnotation("Relational:JsonPropertyName", "due_date");
 
                     b.Property<string>("InvoiceNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "invoice_number");
 
                     b.Property<int>("TotalAmount")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("Relational:JsonPropertyName", "total_amount");
 
                     b.HasKey("Id");
 
@@ -61,7 +65,7 @@ namespace WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BillingId")
+                    b.Property<Guid>("BillingId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -78,7 +82,8 @@ namespace WebAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("UnitPrice")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("Relational:JsonPropertyName", "unit_price");
 
                     b.HasKey("Id");
 
@@ -140,15 +145,19 @@ namespace WebAPI.Migrations
 
             modelBuilder.Entity("WebAPI.Domain.Model.BillingLine", b =>
                 {
-                    b.HasOne("WebAPI.Domain.Model.Billing", null)
+                    b.HasOne("WebAPI.Domain.Model.Billing", "Billing")
                         .WithMany("Lines")
-                        .HasForeignKey("BillingId");
+                        .HasForeignKey("BillingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WebAPI.Domain.Model.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Billing");
 
                     b.Navigation("Product");
                 });
