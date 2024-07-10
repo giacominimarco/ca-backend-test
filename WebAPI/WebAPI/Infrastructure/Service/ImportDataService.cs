@@ -7,10 +7,12 @@ namespace WebAPI.Infrastructure.Service
     {
         private readonly IProductService _productService;
         private readonly ICustomerService _customerService;
-        public ImportDataService(IProductService productService, ICustomerService customerService)
+        private readonly IBillingService _billingService;
+        public ImportDataService(IProductService productService, ICustomerService customerService, IBillingService billingService)
         {
             _productService = productService;
             _customerService = customerService;
+            _billingService = billingService;
         }
 
         public async Task<BillingDTO> ImportFirstData()
@@ -31,8 +33,8 @@ namespace WebAPI.Infrastructure.Service
                 if (billing.Lines is null)
                     throw new DataException("Linnes not found");
 
-                AddCustomer(billing.Customer);
-                AddLinnes(billing.Lines);
+                await AddCustomer(billing.Customer);
+                await AddLinnes(billing.Lines);
 
                 return billing;
             }
@@ -42,7 +44,78 @@ namespace WebAPI.Infrastructure.Service
             }
         }
 
-        private bool AddLinnes(List<BillingLineDTO> lines)
+        public async Task<bool> ImportData()
+        {
+            try
+            {
+                List<object> billingsObj = await GetBillings();
+                List<BillingDTO> billings = CreateBillings(billingsObj);
+                if (billings is null)
+                    throw new DataException("Billings not found");
+
+                for (int i = 0; i < billings.Count; i++)
+                {
+                    BillingDTO billingDTO = billings[i];
+                    Billing billing = CreateBilling(billingDTO);
+                    await _billingService.Insert(billing);
+                }
+                return true;
+            }
+            catch (DataException e)
+            {
+                throw e;
+            }
+        }
+
+        private List<BillingDTO> CreateBillings(List<object> billingsObj)
+        {
+            List<BillingDTO> billings = new List<BillingDTO>();
+
+            for (int i = 0; i < billingsObj.Count; i++)
+            {
+                object billingObj = billingsObj[i];
+                BillingDTO billingDTO = JsonConvert.DeserializeObject<BillingDTO>(billingObj.ToString());
+                billings.Add(billingDTO);
+            }
+
+            return billings;
+        }
+
+        private Billing CreateBilling(BillingDTO billingDTO)
+        {
+            Billing billing = new Billing();
+            billing.Id = Guid.NewGuid();
+            billing.InvoiceNumber = billingDTO.InvoiceNumber;
+            billing.Customer = billingDTO.Customer;
+            billing.Date = billingDTO.Date;
+            billing.DueDate = billingDTO.DueDate;
+            billing.TotalAmount = billingDTO.TotalAmount;
+            billing.Currency = billingDTO.Currency;
+            List<BillingLine> billingLines = CreateBillingLines(billingDTO.Lines);
+            billing.Lines = billingLines;
+            return billing;
+        }
+
+        private List<BillingLine> CreateBillingLines(List<BillingLineDTO> lines)
+        {
+            List<BillingLine> billingLines = new List<BillingLine>();
+            for (int i = 0; i < lines.Count; i++)
+            {
+                BillingLineDTO billingLineDTO = lines[i];
+                BillingLine billingLine = new BillingLine();
+                billingLine.Id = Guid.NewGuid();
+                billingLine.Description = billingLineDTO.Description;
+                billingLine.Quantity = billingLineDTO.Quantity;
+                billingLine.UnitPrice = billingLineDTO.UnitPrice;
+                billingLine.Subtotal = billingLineDTO.Subtotal;
+                billingLine.Product.Id = Guid.Parse(billingLineDTO.ProductId);
+                billingLine.Product.Name = billingLineDTO.Description;
+                billingLines.Add(billingLine);
+            }
+            return billingLines;
+        }
+
+        private async Task<bool> AddLinnes(List<BillingLineDTO> lines)
         {
             for (int i = 0; i < lines.Count; i++)
             {
@@ -50,12 +123,12 @@ namespace WebAPI.Infrastructure.Service
                 Product product = new Product();
                 product.Id = Guid.Parse(billingLine.ProductId);
                 product.Name = billingLine.Description;
-                _productService.Insert(product);
+                await _productService.Insert(product);
             }
-            return true;
+            return await Task.FromResult(true);
         }
 
-        private bool AddCustomer(Customer customer)
+        private Task<bool> AddCustomer(Customer customer)
         {
             return _customerService.Insert(customer);
         }

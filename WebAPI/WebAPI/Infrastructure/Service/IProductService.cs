@@ -7,7 +7,7 @@ namespace WebAPI.Infrastructure.Service
         public Task<Product> Get(Guid id);
         public Task<List<Product>> GetProducts();
         public bool Delete(Guid id);
-        public bool Insert(Product product);
+        public Task<bool> Insert(Product product);
         public bool Update(Product product);
     }
 }

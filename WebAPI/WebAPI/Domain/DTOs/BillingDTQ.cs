@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace WebAPI.Domain.Model
 {
-    public class BillingDTO
+    public class BillingDTQ
     {
         [JsonPropertyName("invoice_number")]
         public string InvoiceNumber { get; set; }

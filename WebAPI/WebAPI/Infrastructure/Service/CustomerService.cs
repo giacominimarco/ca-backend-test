@@ -26,9 +26,12 @@ namespace WebAPI.Infrastructure.Service
             return _customerRepository.Customers();
         }
 
-        public bool Insert(Customer customer)
+        public async Task<bool> Insert(Customer customer)
         {
-            return _customerRepository.Insert(customer);
+            Customer answerCustomer = await _customerRepository.Get(customer.Id);
+            if (answerCustomer is null)
+                return await _customerRepository.Insert(customer);
+            return true;
         }
 
         public bool Update(Customer customer)

@@ -26,9 +26,12 @@ namespace WebAPI.Infrastructure.Service
             return _productRepository.GetProducts();
         }
 
-        public bool Insert(Product product)
+        public async Task<bool> Insert(Product product)
         {
-            return _productRepository.Insert(product);
+            Product answerProduct = await _productRepository.Get(product.Id);
+            if (answerProduct is null)
+                return await _productRepository.Insert(product);
+            return true;
         }
 
         public bool Update(Product product)

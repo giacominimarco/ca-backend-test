@@ -28,11 +28,11 @@ namespace WebAPI.Infrastructure.Repository
             return _connectionContext.Products.ToListAsync();
         }
 
-        public bool Insert(Product product)
+        public async Task<bool> Insert(Product product)
         {
-            _connectionContext.Products.Add(product);
-            _connectionContext.SaveChanges();
-            return true;
+            await _connectionContext.Products.AddAsync(product);
+            await _connectionContext.SaveChangesAsync();
+            return await Task.FromResult(true);
         }
 
         public bool Update(Product product)
