@@ -21,11 +21,13 @@ Criação de uma API REST para gerenciar faturamento de clientes.
 2. Baixar o repositório do github;
 3. Com a solução do projeto aberto em um compilador, atualizar as strings de conexção com seu BD em appsettings.json;
 4. Rodar as migrations;
-4.1 add-migration CreateDB -context ConnectionContext;
-4.2 update-database;
-5. Rodar o projeto
-6. Chamar a API ImportFirstData para popular os Customers e Products de acordo com o primeiro registro da API esterna;
-7. Chamar a API ImportData para inserir o registro do billing e billingLines de acordo com as informações disponivais na primeira API externa;
+```
+add-migration CreateDB -context ConnectionContext;
+update-database;
+```
+6. Rodar o projeto
+7. Chamar a API ImportFirstData para popular os Customers e Products de acordo com o primeiro registro da API esterna;
+8. Chamar a API ImportData para inserir o registro do billing e billingLines de acordo com as informações disponivais na primeira API externa;
 ---------------------
 * Lista de API’s :
 	* Get https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing
