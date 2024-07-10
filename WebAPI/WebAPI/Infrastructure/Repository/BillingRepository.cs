@@ -29,29 +29,28 @@ namespace WebAPI.Infrastructure.Repository
             return _connectionContext.Billings.ToListAsync();
         }
 
-        public bool Insert(Billing billing)
+        public async Task<bool> Insert(Billing billing)
         {
-            //_connectionContext.Billings.Add(billing);
-            InsertBilling(billing);
-            InsertLines(billing);
+            await InsertBilling(billing);
+            await InsertLines(billing);
             return true;
         }
 
-        private void InsertBilling(Billing billing)
+        private async Task InsertBilling(Billing billing)
         {
-            _connectionContext.Database.ExecuteSqlRaw($"INSERT INTO Billings (Id,InvoiceNumber,CustomerId,Date,DueDate,TotalAmount,Currency) VALUES ('{billing.Id}','{billing.InvoiceNumber}','{billing.Customer.Id}','{billing.Date}','{billing.DueDate}',{billing.TotalAmount},'{billing.Currency}')");
-            _connectionContext.SaveChanges();
+            await _connectionContext.Database.ExecuteSqlRawAsync($"INSERT INTO Billings (Id,InvoiceNumber,CustomerId,Date,DueDate,TotalAmount,Currency) VALUES ('{billing.Id}','{billing.InvoiceNumber}','{billing.Customer.Id}','{billing.Date}','{billing.DueDate}',{billing.TotalAmount},'{billing.Currency}')");
+            await _connectionContext.SaveChangesAsync();
         }
 
-        public void InsertLines(Billing billing)
+        public async Task InsertLines(Billing billing)
         {
             billing.Lines.ForEach(l => l.BillingId = billing.Id);
             for (int i = 0; i < billing.Lines.Count; i++)
             {
                 BillingLine line = billing.Lines[i];
-                _connectionContext.Database.ExecuteSqlRaw($"INSERT INTO BillingLines (Id,ProductId,Description,Quantity,UnitPrice,Subtotal,BillingId) VALUES ('{line.Id}','{line.Product.Id}','{line.Description}',{line.Quantity},{line.UnitPrice},{line.Subtotal},'{line.BillingId}')");
+                await _connectionContext.Database.ExecuteSqlRawAsync($"INSERT INTO BillingLines (Id,ProductId,Description,Quantity,UnitPrice,Subtotal,BillingId) VALUES ('{line.Id}','{line.Product.Id}','{line.Description}',{line.Quantity},{line.UnitPrice},{line.Subtotal},'{line.BillingId}')");
             }
-            _connectionContext.SaveChanges();
+            await _connectionContext.SaveChangesAsync();
         }
 
         public bool Update(Billing billing)

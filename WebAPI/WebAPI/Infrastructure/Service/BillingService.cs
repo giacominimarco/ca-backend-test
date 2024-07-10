@@ -38,7 +38,7 @@ namespace WebAPI.Infrastructure.Service
             {
                 await HasCustomer(billing.Customer);
                 await HasLinnes(billing.Lines);
-                return _billingRepository.Insert(billing);
+                return await _billingRepository.Insert(billing);
             }
             catch (HttpRequestException e)
             {
